@@ -6,8 +6,6 @@ import (
 	"log"
 	"html/template"
 	"strconv"
-	// "text/template"
-	// "reflect"
 )
 
 type Observation struct {
@@ -22,21 +20,6 @@ type cat_friend struct {
 
 var Cat_friends []cat_friend
 
-// func init() {
-// 	Cat_friends = []cat_friend{
-// 		cat_friend{
-// 			Name:"Kenei",
-// 			Age: 29,
-// 			Observations: Observation{ Treats: true, Cuddles: true },
-// 		},
-// 		cat_friend{
-// 			Name:"Miki",
-// 			Age: 11,
-// 			Observations: Observation{ Treats: true, Cuddles: false },
-// 		},
-// 	}
-// }
-
 var tpl *template.Template
 
 func init() {
@@ -48,30 +31,8 @@ func page_title(w http.ResponseWriter) {
 	fmt.Fprintf(w, "<h1>%s</h1><button><a href=\"/view\">Add friend</a></button>", title)
 }
 
-func form(w http.ResponseWriter, r *http.Request) {
-
-	t, _ := template.ParseFiles("form.html")
-	t.Execute(w, nil)
-	// "<form>"+
-	// 	"Name: <input name=\"name\"></input>\n"+
-	// 	"Age: <input type=\"number\" name=\"age\"></input>\n"+
-	// 	"Treats: <select name=\"treats\">"+
-	// 		"<option value=\"true\">Yes</option>"+
-	// 		"<option value=\"false\">No</option>"+
-	// 	"</select>\n"+
-	// 	"Cuddles: <select name=\"cuddles\">"+
-	// 		"<option value=\"true\">Yes</option>"+
-	// 		"<option value=\"false\">No</option>"+
-	// 	"</select>\n"+
-	// 	"<input type=\"submit\" value=\"Save\">"+
-	// "</form>")
-}
-
 func viewHandler(w http.ResponseWriter, r *http.Request) {
 	page_title(w)
-	// form(w)
-	fmt.Println(Cat_friends)
-	
 
 	for _, friend := range Cat_friends {
 
@@ -88,7 +49,6 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 		// } else {
 		// 	cuddles = "no way jose"
 		// }
-		// fmt.Println(friend)
 		t, err := template.ParseFiles("/templates/view.html")
 		if err != nil {
 			panic(err)
@@ -99,11 +59,6 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
-
-// func formHandler(w http.ResponseWriter, r *http.Request) {
-// 	t, _ := template.ParseFiles("form.html")
-// 	t.Execute(w, nil)
-// }
 
 func main() {
 	http.HandleFunc("/", viewHandler)
@@ -117,8 +72,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func processor(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("hello world")
-
+	
 	if r.Method != "POST" {
 		http. Redirect(w, r, "/", http.StatusSeeOther)
 		return
@@ -144,23 +98,7 @@ func processor(w http.ResponseWriter, r *http.Request) {
 		Observations: o,
 	}
 
-	// Cat_friends.append(Cat_friends, d)
-	// Cat_friends = []cat_friend{
-	// 	cat_friend{
-	// 		Name:"Ken",
-	// 		Age: 3,
-	// 		Observations: Observation{ Treats: false, Cuddles: false },
-	// 	},
-	// }
-
 	Cat_friends = append(Cat_friends, d)
 
-	fmt.Println(Cat_friends)
-
 	http. Redirect(w, r, "/", http.StatusSeeOther)
-	// tpl.ExecuteTemplate(w, "index.html", nil)
 }
-
-// func (c *Cat_friends) save(new_friend) {
-// 	c.append(c, new_friend)
-// }
