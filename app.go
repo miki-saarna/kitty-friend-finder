@@ -49,7 +49,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 		// } else {
 		// 	cuddles = "no way jose"
 		// }
-		t, err := template.ParseFiles("/templates/view.html")
+		t, err := template.ParseFiles("templates/view.html")
 		if err != nil {
 			panic(err)
 		}
